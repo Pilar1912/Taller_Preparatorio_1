@@ -6,7 +6,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         Metodos m = new Metodos();
 
-        ObjProducto[] productos = m.Productos();
+        ObjProducto[][] productos = m.Productos();
 
         System.out.print("Ingrese el nombre del producto a buscar: ");
 
