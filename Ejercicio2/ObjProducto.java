@@ -1,3 +1,5 @@
+package Ejercicio2;
+
 public class ObjProducto {
     private int IdProducto;
     private String NombreProducto;

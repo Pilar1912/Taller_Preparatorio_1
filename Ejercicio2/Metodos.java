@@ -1,3 +1,5 @@
+package Ejercicio2;
+
 import java.util.Scanner;
 import java.util.Random;
 
@@ -55,5 +57,4 @@ public class Metodos
         System.out.println("Producto no encontrado");
     }    
 }
-
 
