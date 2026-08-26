@@ -1,214 +1,81 @@
 package Ejercicio5;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Metodos {
-    Scanner sc = new Scanner(System.in);
-    Random rand = new Random();
-    public ObjProductos[][] IngresarProductos1(int n){
-        
-        ObjProductos[][] Productos1 = new ObjProductos[2][10];
+    
+    public ObjProductos[][] LlenarAlmacen(ObjProductos[][] a, Scanner sc){
+        for(int i =0; i < a.length; i++){
+            for(int j =0; j < a.length; j++){
+                System.out.println("Ingrese el nombre del producto: ");
+                String nombre = sc.next();
+                System.out.println("Ingrese el precio del producto:");
+                Double precio = sc.nextDouble();
+                System.out.println("Ingrese la cantidad del producto:");
+                int stock = sc.nextInt();
 
-        for(int i = 0; i < Productos1.length; i++){
-            for(int j = 0; j < Productos1[i].length; j++){
-                Productos1[i][j] = new ObjProductos();
-                Productos1[i][j].setNombre("Producto" + (i * 10 + j + 1));
-                Productos1[i][j].setPrecio(Math.round(rand.nextDouble(1000,100001)*1000.0)/1000.0);
-                Productos1[i][j].setStock(rand.nextInt(10)+1);
+                ObjProductos p = new ObjProductos(nombre,precio,stock);
+                a[i][j] = p;
             }
         }
-        return Productos1;
+        return a;
     }
 
-    public ObjProductos[][] IngresarProductos2(ObjProductos[][] productos1){
-
-    ObjProductos[][] productos2 = new ObjProductos[3][10];
-
-    for(int i = 0; i < productos2.length; i++){
-        for(int j = 0; j < productos2[i].length; j++){
-
-            productos2[i][j] = new ObjProductos();
-
-            if(i < productos1.length && rand.nextInt(100) < 40){ 
-
-                productos2[i][j].setNombre(productos1[i][j].getNombre());
-                productos2[i][j].setPrecio(productos1[i][j].getPrecio());
-
-            }else{
-
-                productos2[i][j].setNombre("Producto" + (i * 10 + j + 1));
-                productos2[i][j].setPrecio(Math.round(rand.nextDouble(1000,100001) * 1000.0) / 1000.0);
-
-            }
-
-            productos2[i][j].setStock(rand.nextInt(10) + 1);
-        }
-    }
-
-    return productos2;
-}
-
-
-   /*  public ObjProductos[][] CombinarMatrices(ObjProductos[][] productos1, ObjProductos[][] productos2){
-        int filas1 = productos1.length;
-        int filas2 = productos2.length;
-        int columnas = productos1[0].length;
-
-        ObjProductos[][] matrizR = new ObjProductos[filas1 + filas2][columnas];
-
-        for (int i = 0; i < filas1; i++) {
-            for (int j = 0; j < columnas; j++) {
-                matrizR[i][j] = productos1[i][j];
-            }
-        }
-
-        for (int i = 0; i < filas2; i++) {
-            for (int j = 0; j < columnas; j++) {
-                matrizR[filas1 + i][j] = productos2[i][j];
-            }
-        }
-
-        return matrizR;
-    }*/
-    public ObjProductos[][] CombinarMatrices(ObjProductos[][] productos1, ObjProductos[][] productos2) {
-
-    int filas = productos1.length + productos2.length;
-    int columnas = 10;
-
-    ObjProductos[][] matrizR = new ObjProductos[filas][columnas];
-
-    int fila = 0;
-    int columna = 0;
-
-    for (int i = 0; i < productos1.length; i++) {
-        for (int j = 0; j < productos1[i].length; j++) {
-
-            matrizR[fila][columna] = new ObjProductos();
-            matrizR[fila][columna].setNombre(productos1[i][j].getNombre());
-            matrizR[fila][columna].setPrecio(productos1[i][j].getPrecio());
-            matrizR[fila][columna].setStock(productos1[i][j].getStock());
-
-            columna++;
-            if (columna == columnas) {
-                columna = 0;
-                fila++;
+    public void MostrarProductos(ObjProductos[][] a){
+        for(int i =0; i < a.length; i++){
+            for(int j =0; j < a[0].length; j++){
+                System.out.println("El nombre del producto: " + a[i][j].getNombre());
+                System.out.println("Precio del producto: " + a[i][j].getPrecio());
+                System.out.println("Cantidad (stock) del producto: " + a[i][j].getStock());
             }
         }
     }
 
-    for (int i = 0; i < productos2.length; i++) {
-        for (int j = 0; j < productos2[i].length; j++) {
+    public ObjProductos[][] MatrizUnificada(ObjProductos[][] a,ObjProductos[][] b,ObjProductos[][] c){
+        //UNIFICAR MATRICES
 
-            boolean encontrado = false;
+        for(int i = 0; i < a.length; i++) {
+            for(int j = 0; j < a[i].length; j++) {
+                for(int i1 = 0; i1 < b.length; i1++){
+                    for(int j1 = 0; j1 < b[0].length; j1++){
+                        if(a[i][j].getNombre().equalsIgnoreCase(b[i1][j1].getNombre())){
+                            a[i][j].setStock(a[i][j].getStock() + b[i1][j1].getStock());
+                            b[i1][j1].setNombre(null);
 
-            for (int f = 0; f <= fila && !encontrado; f++) {
+                        }
 
-                int limite;
 
-                if (f == fila) {
-                    limite = columna;
-                } else {
-                    limite = columnas;
-                }
-
-                for (int c = 0; c < limite; c++) {
-
-                    if (matrizR[f][c].getNombre().equals(productos2[i][j].getNombre())
-                            && matrizR[f][c].getPrecio() == productos2[i][j].getPrecio()) {
-
-                        matrizR[f][c].setStock(
-                                matrizR[f][c].getStock()
-                                + productos2[i][j].getStock());
-
-                        encontrado = true;
-                        break;
                     }
                 }
             }
+        }
 
-            if (!encontrado) {
+        //PASAR LOS DATOS DE LA MATRIZ a A LA MATRIZ c
+        //int auxf = 0, auxc = 0;
+        int auxf = a.length, auxc = a.length;
 
-                matrizR[fila][columna] = new ObjProductos();
-                matrizR[fila][columna].setNombre(productos2[i][j].getNombre());
-                matrizR[fila][columna].setPrecio(productos2[i][j].getPrecio());
-                matrizR[fila][columna].setStock(productos2[i][j].getStock());
+        for(int i = 0; i < c.length; i++){
+            for(int j = 0; j < c[i].length; j++) {
+                c[i][j] = a[i][j];
+                auxc = j;
+            }
+            auxf = i;
+        }
 
-                columna++;
-                if (columna == columnas) {
-                    columna = 0;
-                    fila++;
+        for(int i = 0; i < c.length; i++){
+            for(int j = 0; j < c[i].length; j++) {
+                if(b[i][j].getNombre() != null){
+                c[auxf][auxc] = b [i][j];
+                auxc++;
                 }
-            }
-        }
-    }
 
-    return matrizR;
-}
-
-    public void MostrarProductos1(ObjProductos[][] productos1) {
-        
-        System.out.println("--- PRODUCTOS ---");
-        for (int i = 0; i < productos1.length; i++) {
-            for (int j = 0; j < productos1[i].length; j++) {
-                System.out.println(productos1[i][j].getNombre() + ' ' + productos1[i][j].getPrecio() + ' '+ productos1[i][j].getStock());
             }
-            System.out.println(); 
-        }
-    }
-
-    public void MostrarProductos2(ObjProductos[][] productos2) {
-        
-        System.out.println("--- PRODUCTOS ---");
-        for (int i = 0; i < productos2.length; i++) {
-            for (int j = 0; j < productos2[i].length; j++) {
-                System.out.println(productos2[i][j].getNombre() + ' ' + productos2[i][j].getPrecio() + ' '+ productos2[i][j].getStock());
-            }
-            System.out.println(); 
-        }
-    }
-
-    /* 
-    public void MostrarMatrizCombinada(ObjProductos[][] matrizR){
-        System.out.println("----- MATRICES COMBINADA ------");
-        for (int i = 0; i < matrizR.length; i++) {
-            for (int j = 0; j < matrizR[i].length; j++) {
-                System.out.println(
-                    matrizR[i][j].getNombre() + " " +
-                    matrizR[i][j].getPrecio() + " " +
-                    matrizR[i][j].getStock()
-                );
-            }
-            System.out.println();
+            auxf++;        
         }
 
-    }*/
 
-    public void MostrarMatrizCombinada(ObjProductos[][] matrizR) {
+        return c;
+    } 
 
-    System.out.println("----- MATRIZ COMBINADA -----");
-
-    for (int i = 0; i < matrizR.length; i++) {
-        for (int j = 0; j < matrizR[i].length; j++) {
-
-            if (matrizR[i][j] != null) {
-                System.out.println(
-                        matrizR[i][j].getNombre() + "  "
-                        + matrizR[i][j].getPrecio() + "  "
-                        + matrizR[i][j].getStock());
-            }
-        }
-    }
-}
-
-    public int OpcionesMenuPrincipal(){
-        System.out.println("1. Mostrar productos matriz 1");
-        System.out.println("2. Mostrar productos matriz 2");
-        System.out.println("3. Mostrar suma de stock de los productos idénticos de ambas matrices");
-        System.out.println("4. Salir");
-
-        return sc.nextInt();
-    }
 
     
-
 }
