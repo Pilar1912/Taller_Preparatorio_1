@@ -36,7 +36,7 @@ public class Menu {
                 m.MostrarProductos(almacen2);
                 break;
             case 5:
-                m.MatrizUnificada(almacen1, almacen2,almacenUnificado);
+                m.BuscarProductos(almacenUnificado, sc);
                 break;
             case 6:
                 almacenUnificado = m.MatrizUnificada(almacen1, almacen2,almacenUnificado);

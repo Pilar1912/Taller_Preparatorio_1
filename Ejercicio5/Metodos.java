@@ -33,6 +33,21 @@ public class Metodos {
         }
     }
 
+    public void BuscarProductos(ObjProductos[][] a, Scanner sc){
+        System.out.println("Ingrese el nombre del producto a buscar:");
+        String dato = sc.next();
+        for(int i =0; i < a.length; i++){
+            for(int j =0; j < a[0].length; j++){
+                if(a[i][j].getNombre().equalsIgnoreCase(dato)){
+                System.out.println("El nombre del producto: " + a[i][j].getNombre());
+                System.out.println("Precio del producto: " + a[i][j].getPrecio());
+                System.out.println("Cantidad (stock) del producto: " + a[i][j].getStock());
+                System.out.println("----------------------------------------------------");
+                }
+            }
+        }
+    }
+
     public ObjProductos[][] MatrizUnificada(ObjProductos[][] a,ObjProductos[][] b,ObjProductos[][] c){
         //UNIFICAR MATRICES
 
