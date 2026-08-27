@@ -23,9 +23,12 @@ public class Metodos {
     public void MostrarProductos(ObjProductos[][] a){
         for(int i =0; i < a.length; i++){
             for(int j =0; j < a[0].length; j++){
+                if(a[i][j] != null){
                 System.out.println("El nombre del producto: " + a[i][j].getNombre());
                 System.out.println("Precio del producto: " + a[i][j].getPrecio());
                 System.out.println("Cantidad (stock) del producto: " + a[i][j].getStock());
+                System.out.println("----------------------------------------------------");
+                }
             }
         }
     }
@@ -51,25 +54,24 @@ public class Metodos {
 
         //PASAR LOS DATOS DE LA MATRIZ a A LA MATRIZ c
         //int auxf = 0, auxc = 0;
-        int auxf = a.length, auxc = a.length;
+        int auxc = a.length;
 
         for(int i = 0; i < c.length; i++){
-            for(int j = 0; j < c[i].length; j++) {
+            for(int j = 0; j < c.length; j++) {
                 c[i][j] = a[i][j];
-                auxc = j;
+                //auxc = j;
             }
-            auxf = i;
         }
 
-        for(int i = 0; i < c.length; i++){
-            for(int j = 0; j < c[i].length; j++) {
+        for(int i = 0; i < b.length; i++){
+            for(int j = 0; j < b.length; j++) {
                 if(b[i][j].getNombre() != null){
-                c[auxf][auxc] = b [i][j];
+                c[i][auxc] = b[i][j];
                 auxc++;
                 }
+                auxc = a.length;
 
-            }
-            auxf++;        
+            }      
         }
 
 
